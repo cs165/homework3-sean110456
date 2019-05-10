@@ -1,3 +1,15 @@
 /*
 TODO(you): Write any additional styles you need here.
 */
+.flashcard-box .word{
+    animation: cardShown 0.5s;
+}
+
+@keyframes cardShown{
+    from{
+        transform: translateY(100%);
+    }
+    to{
+        transform: translateY(0%);
+    }
+}
