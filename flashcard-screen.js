@@ -36,6 +36,7 @@ class FlashcardScreen {
 
   show(title) {    
     this.title = title;
+    this.wrongList = [];    
     this.containerElement.classList.remove('inactive');
     const flashcardContainer = document.querySelector('#flashcard-container');
     for(let fd of FLASHCARD_DECKS){
@@ -55,7 +56,6 @@ class FlashcardScreen {
   showNextCard(){
     this.currentCard++;
     if(this.currentCard === this.cardList.length){
-      console.log(this.wrongList);
       this.showResultCallback(this.title,this.rightScore, this.wrongScore);
       return;
     }
@@ -66,11 +66,20 @@ class FlashcardScreen {
   }
   whenContinue(){
     this.containerElement.classList.remove('inactive');
-    this.cardList = this.wrongList;
+    if(this.wrongList.length === 0){
+      console.log('bug');
+      this.rightScore = 0;
+    }
+    else{
+      this.cardList.splice(0,this.cardList.length);
+      for(let w of this.wrongList){
+        this.cardList.push(w);
+      }
+    }
     this.wrongList = [];
     this.wrongScore = 0;
     this.updateScore(0,0);
-    this.currentCard = 0;
+    this.currentCard = 0;    
     this.cardList[0].showCard();
   }
   hide() {
